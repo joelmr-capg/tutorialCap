@@ -4,6 +4,8 @@ export const routes: Routes = [
 {
   path: 'categories', 
   loadComponent: () => import('./category/category-list/category-list')
-    .then(m => m.CategoryList)
-}
+    .then(m => m.CategoryList),
+    
+},
+{ path: 'authors', loadComponent: () => import('./author/author-list/author-list.component').then(m => m.AuthorListComponent)},
 ] 

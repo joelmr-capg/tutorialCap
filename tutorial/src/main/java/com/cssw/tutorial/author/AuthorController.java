@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Tag(name = "Author", description = "API of author")
@@ -41,6 +42,14 @@ public class AuthorController {
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) throws Exception {
         this.authorService.delete(id);
+    }
+
+    @Operation(summary = "find", description = "Metodo que devuelve lista de autores")
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<AuthorDTO> findAll() {
+        List<Author> authors = this.authorService.findAll();
+
+        return authors.stream().map(e -> mapper.map(e, AuthorDTO.class)).collect(Collectors.toList());
     }
 }
 
