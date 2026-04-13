@@ -3,7 +3,7 @@ package com.cssw.tutorial.client.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
