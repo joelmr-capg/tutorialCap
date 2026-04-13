@@ -27,5 +27,5 @@ export class CategoryService {
 
   deleteCategory(idCategory : number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${idCategory}`);
-  }  
+  }
 }

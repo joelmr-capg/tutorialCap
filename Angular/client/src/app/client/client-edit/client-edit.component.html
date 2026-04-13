@@ -1,1 +1,25 @@
-<p>client-edit works!</p>
+<div class = "container">
+@if (client.id) {
+  <h1>Modificar Cliente</h1>
+} @else {
+  <h1>Crear Cliente</h1>
+}
+
+<form>
+  <mat-form-field>
+    <mat-label>Identificador</mat-label>
+    <input type = "text" matInput placeholder = "Identificador" [(ngModel)] = "client.id" name = "id" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input type = "text" matInput placeholder = "Nombre" [(ngModel)] = "client.name" name = "nombre">
+    <mat-error>El campo nombre no puede estar vacio</mat-error>
+  </mat-form-field>
+
+  <div class = "buttons">
+    <button mat-stroked-button (click) = "onClose()">Cerrar</button>
+    <button mat-raised-button (click) = "onSave()">Guardar</button>
+  </div>
+</form>
+</div>
