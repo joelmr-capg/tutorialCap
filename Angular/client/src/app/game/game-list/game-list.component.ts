@@ -46,7 +46,7 @@ filterTitle: string;
 
   ngOnInit(): void {
     this.gameService.getGames().subscribe((games) => (this.games = games));
-
+    
         this.categoryService
             .getCategories()
             .subscribe((categories) => (this.categories = categories));
