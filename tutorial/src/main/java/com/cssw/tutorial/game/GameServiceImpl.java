@@ -26,6 +26,11 @@ public class GameServiceImpl implements GameService {
     CategoryService categoryService;
 
     @Override
+    public Game get(Long id) {
+        return gameRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<Game> find(String title, Long idCategory) {
         GameSpecification titleSpec = new GameSpecification(new SearchCriteria("title", ":", title));
         GameSpecification categorySpec = new GameSpecification(new SearchCriteria("category.id", ":", idCategory));
