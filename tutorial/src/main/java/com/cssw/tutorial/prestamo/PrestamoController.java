@@ -46,6 +46,12 @@ public class PrestamoController {
 
     }
 
+    @Operation(summary = "Delete", description = "Eliminar prestamo")
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") long id) throws Exception {
+        this.prestamoService.delete(id);
+    }
+
     /*@Operation(summary = "FindInicial", description = "Metodo qeu devuelve lista de prestamos")
     @RequestMapping(path = " ", method = RequestMethod.GET)
     public List<PrestamoDTO> findAll() {
