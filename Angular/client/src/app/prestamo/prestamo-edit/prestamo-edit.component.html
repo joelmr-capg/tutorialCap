@@ -1,1 +1,52 @@
-<p>prestamo-edit works!</p>
+<div class="container">
+ @if (prestamo.id) {
+  <h1>Editar Prestamo</h1>
+ } @else {
+  <h1>Crear Prestamo</h1>
+ }
+
+ <form>
+  <mat-form-field>
+    <mat-label>Identificador</mat-label>
+    <input type="text" matInput placeholder="Identificador" [(ngModel)]="prestamo.id" name="id" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+            <mat-label>Juego</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.game" name="game" required>
+                @for (game of games; track game.id) {
+                    <mat-option [value]="game">{{game.title}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>El juego no puede estar vacío</mat-error>
+        </mat-form-field>
+
+    <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select disableRipple [(ngModel)]="prestamo.client" name="client" required>
+                @for (client of clients; track client.id) {
+                    <mat-option [value]="client">{{client.name}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>El cliente no puede estar vacío</mat-error>
+        </mat-form-field>
+
+    <div class="fechas">
+        <mat-form-field>
+            <mat-label>Fecha de prestamo</mat-label>
+            <input type="date" matInput placeholder="Fecha de prestamo" [(ngModel)]="prestamo.fechaPrestamo" name="fechaPrestamo" required>
+            <mat-error>Este campo no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+            <mat-label>Fecha Devolucion</mat-label>
+            <input type="date" matInput placeholder="Fecha Devolucion" [(ngModel)]="prestamo.fechaDevolucion" name="fechaDevolucion" required>
+            <mat-error>Este campo no puede estar vacío</mat-error>
+    </mat-form-field>
+    </div>
+ </form>
+ <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>

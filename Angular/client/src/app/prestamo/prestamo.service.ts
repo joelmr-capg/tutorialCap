@@ -14,8 +14,8 @@ export class PrestamoService {
 
   private baseUrl = 'http://localhost:8080/prestamo'
 
-  getPrestamos(title?: string, clientId?: number, fecha?: Date):Observable<Prestamo[]>{
-    return this.http.get<Prestamo[]>(this.composeFindUrl(title, clientId, fecha))
+  getPrestamos(gameId?: number, clientId?: number, fecha?: Date):Observable<Prestamo[]>{
+    return this.http.get<Prestamo[]>(this.composeFindUrl(gameId, clientId, fecha))
   }
 
   savePrestamo(prestamo:Prestamo): Observable<void>{
@@ -24,10 +24,10 @@ export class PrestamoService {
     return this.http.put<void>(url, prestamo)
   }
 
-  composeFindUrl(title?: string, clientId?: number, fecha?: Date):string{
+  composeFindUrl(gameId?: number, clientId?: number, fecha?: Date):string{
     const params = new URLSearchParams();
-    if(title){
-      params.set('title', title)
+    if(gameId){
+      params.set('gameId', gameId.toString())
     }
     if(clientId){
       params.set('clientId', clientId.toString())
