@@ -20,4 +20,5 @@ public interface PrestamoService {
     public void delete(Long id) throws Exception;
 
     List<Prestamo> findAll();
+
 }

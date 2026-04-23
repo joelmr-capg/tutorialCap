@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -59,4 +60,9 @@ public class PrestamoController {
         return prestamos.stream().map(e -> mapper.map(e, PrestamoDTO.class)).collect(Collectors.toList());
 
     }*/
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleValidationError(IllegalArgumentException ex) {
+        return ex.getMessage();
+    }
 }
