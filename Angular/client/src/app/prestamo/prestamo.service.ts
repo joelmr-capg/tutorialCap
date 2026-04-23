@@ -43,9 +43,33 @@ export class PrestamoService {
     return this.http.delete<void>(`${this.baseUrl}/${idPrestamo}`)
   }
 
-  getListaPrestamos(pageable: Pageable): Observable<PrestamoPage>{
-    return this.http.post<PrestamoPage>(this.baseUrl, { pageable: pageable });
+
+
+getListaPrestamos(
+  pageable: Pageable,
+  titulo?: string,
+  idClient?: number,
+  fecha?: string
+): Observable<PrestamoPage> {
+
+  const body: any = {
+    pageable
+  };
+
+  if (titulo) {
+    body.titulo = titulo;
   }
+
+  if (idClient !== null && idClient !== undefined) {
+    body.idClient = idClient;
+  }
+
+  if (fecha) {
+    body.fecha = fecha;
+  }
+
+  return this.http.post<PrestamoPage>(this.baseUrl, body);
+}
 
 
 }

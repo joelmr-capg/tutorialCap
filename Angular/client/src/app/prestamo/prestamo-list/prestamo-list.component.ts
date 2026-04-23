@@ -42,7 +42,7 @@ export class PrestamoListComponent implements OnInit {
   games: Game[];
   filterGame: Game;
   filterClient: Client;
-  filterDate: Date;
+  filterDate: string;
   pageNumber: number = 0;
   pageSize: number = 5;
   totalElements: number = 0;
@@ -68,40 +68,50 @@ export class PrestamoListComponent implements OnInit {
   }
 
   loadPage(event?: PageEvent){
-    const pageable: Pageable = {
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
-      sort: [
-        {
-          property: 'id',
-          direction: 'ASC'
-        }
-      ]
-    };
-    if(event != null) {
-      pageable.pageSize = event.pageSize;
-      pageable.pageNumber = event.pageIndex
-    }
 
-    this.prestamoService.getListaPrestamos(pageable).subscribe((data) =>{
-      this.dataSource.data = data.content;
-      this.pageNumber = data.pageable.pageNumber;
-      this.pageSize = data.pageable.pageSize;
-      this.totalElements = data.totalElements;
-    })
+
+const pageable: Pageable = {
+    pageNumber: event ? event.pageIndex : this.pageNumber,
+    pageSize: event ? event.pageSize : this.pageSize,
+    sort: [
+      {
+        property: 'id',
+        direction: 'ASC'
+      }
+    ]
+  };
+
+
+const titulo = this.filterGame?.title ?? null;
+const idClient = this.filterClient?.id ?? null;
+
+const fecha = this.filterDate ?? null;
+
+this.prestamoService
+  .getListaPrestamos(pageable, titulo, idClient, fecha)
+  .subscribe(data => {
+    this.dataSource.data = data.content;
+    this.pageNumber = data.pageable.pageNumber;
+    this.pageSize = data.pageable.pageSize;
+    this.totalElements = data.totalElements;
+  });
+
   }
 
   onClearFilter(): void{
-    this.filterGame = null;
-    this.filterClient = null;
-    this.onSearch();
+
+this.filterGame = null;
+  this.filterClient = null;
+  this.filterDate = null;
+  this.onSearch();
+
   }
 
   onSearch(): void{
-    const gameId = this.filterGame != null? this.filterGame.id : null;
-    const clientId = this.filterClient != null? this.filterClient.id : null;
 
-    this.prestamoService.getPrestamos(gameId, clientId).subscribe((prestamos) => (this.prestamos = prestamos));
+this.pageNumber = 0;
+  this.loadPage();
+
   }
 
 

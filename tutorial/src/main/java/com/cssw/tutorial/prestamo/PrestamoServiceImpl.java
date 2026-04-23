@@ -33,7 +33,16 @@ public class PrestamoServiceImpl implements PrestamoService {
 
     @Override
     public Page<Prestamo> findPage(PrestamoSearchDTO dto) {
-        return this.prestamoRepository.findAll(dto.getPageable().getPageable());
+
+        PrestamoSpecification titleSpec = new PrestamoSpecification(new SearchCriteria("game.title", ":", dto.getTitulo()));
+
+        PrestamoSpecification clientSpec = new PrestamoSpecification(new SearchCriteria("client.id", ":", dto.getIdClient()));
+
+        PrestamoSpecification fechaSpec = new PrestamoSpecification(new SearchCriteria("fechaPrestamo", ":", dto.getFecha()));
+
+        Specification<Prestamo> spec = Specification.where(titleSpec).and(clientSpec).and(fechaSpec);
+
+        return this.prestamoRepository.findAll(spec, dto.getPageable().getPageable());
     }
 
     @Override

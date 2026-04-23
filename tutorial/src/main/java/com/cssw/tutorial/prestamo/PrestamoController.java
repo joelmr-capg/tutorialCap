@@ -39,7 +39,7 @@ public class PrestamoController {
     }
 
     @Operation(summary = "Find page", description = "Crea lista de prestamos")
-    @RequestMapping(path = " ", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public Page<PrestamoDTO> findPage(@RequestBody PrestamoSearchDTO dto) {
         Page<Prestamo> page = this.prestamoService.findPage(dto);
         return new PageImpl<>(page.getContent().stream().map(e -> mapper.map(e, PrestamoDTO.class)).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
