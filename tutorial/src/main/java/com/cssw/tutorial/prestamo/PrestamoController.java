@@ -60,9 +60,14 @@ public class PrestamoController {
         return prestamos.stream().map(e -> mapper.map(e, PrestamoDTO.class)).collect(Collectors.toList());
 
     }*/
+
+    record ErrorResponse(String message) {
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleValidationError(IllegalArgumentException ex) {
-        return ex.getMessage();
+    public ErrorResponse handleValidationError(IllegalArgumentException ex) {
+        return new ErrorResponse(ex.getMessage());
     }
+
 }

@@ -12,6 +12,7 @@ import { GameService } from '../../game/game.service';
 import { ClientService } from '../../client/client.service';
 import { Game } from '../../game/model/Game';
 import { Client } from '../../client/model/Client';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-prestamo-edit',
@@ -29,7 +30,8 @@ export class PrestamoEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private prestamoService: PrestamoService,
     private gameService: GameService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +64,25 @@ export class PrestamoEditComponent implements OnInit {
   }
 
   onSave() {
-    this.prestamoService.savePrestamo(this.prestamo).subscribe(() => {
-      this.dialogRef.close()
+    this.prestamoService.savePrestamo(this.prestamo).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+        this.snackBar.open("Prestamo guardado correctamente", "Cerrar",{
+          duration: 3000
+        });
+      },
+      error: (err) => {
+        let message = "Error al guardar el prestamo"
+
+        if(typeof err.error === "string"){
+          message = err.error;
+        } else if (err.error?.message){
+          message = err.error.message;
+        }
+        this.snackBar.open(message, "Cerrar", {
+          duration: 5000
+        })
+      }
     })
   }
 
